@@ -1,10 +1,8 @@
 class Api::TransactionsController < ApplicationController
+  before_action :update_params, only: [:deposit, :withdraw]
 
   def tranfer
-    TransactionQueueService.instance.tranfer_queue.push(transaction_params)
-    instance_param = TransactionQueueService.instance.tranfer_queue.pop
-
-    service = newTransactionService(instance_param)
+    service = newTransactionService("tranfer")
     @transaction = service.tranfer
 
     if @transaction.errors.empty?
@@ -15,12 +13,7 @@ class Api::TransactionsController < ApplicationController
   end
 
   def deposit
-    params[:transactions][:from_wallet_id] = current_user.wallet.id
-    params[:transactions][:to_wallet_id] = current_user.wallet.id
-    TransactionQueueService.instance.deposit_queue.push(transaction_params)
-    instance_param = TransactionQueueService.instance.deposit_queue.pop
-
-    service = newTransactionService(instance_param)
+    service = newTransactionService("deposit")
     @transaction = service.deposit
 
     if @transaction.errors.empty?
@@ -31,12 +24,7 @@ class Api::TransactionsController < ApplicationController
   end
 
   def withdraw
-    params[:transactions][:from_wallet_id] = current_user.wallet.id
-    params[:transactions][:to_wallet_id] = current_user.wallet.id
-    TransactionQueueService.instance.withdraw_queue.push(transaction_params)
-    instance_param = TransactionQueueService.instance.withdraw_queue.pop
-
-    service = newTransactionService(instance_param)
+    service = newTransactionService("withdraw")
     @transaction = service.withdraw
 
     if @transaction.errors.empty?
@@ -48,11 +36,18 @@ class Api::TransactionsController < ApplicationController
 
   private
 
+  def update_params
+    params[:transactions][:from_wallet_id] = current_user.wallet.id
+    params[:transactions][:to_wallet_id] = current_user.wallet.id
+  end
+
   def transaction_params
     params.require(:transactions).permit(:from_wallet_id, :to_wallet_id, :amount, :description)
   end
 
-  def newTransactionService instance_param
+  def newTransactionService transaction_type
+    TransactionQueueService.instance.send("#{transaction_type}_queue").push(transaction_params)
+    instance_param = TransactionQueueService.instance.send("#{transaction_type}_queue").pop
     TransactionService.new( instance_param[:from_wallet_id],
       instance_param[:from_wallet_id],
       instance_param[:amount],
