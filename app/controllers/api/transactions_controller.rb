@@ -1,10 +1,12 @@
 class Api::TransactionsController < ApplicationController
 
   def tranfer_money
-    service = TransactionService.new( tranfer_money_params[:from_wallet_id],
-                                      tranfer_money_params[:to_wallet_id],
-                                      tranfer_money_params[:amount],
-                                      tranfer_money_params[:description]
+    TransactionQueueService.instance.queue.push(tranfer_money_params)
+    instance_param = TransactionQueueService.instance.queue.pop
+    service = TransactionService.new( instance_param[:from_wallet_id],
+                                      instance_param[:to_wallet_id],
+                                      instance_param[:amount],
+                                      instance_param[:description]
                                     )
 
     @transaction = service.call
