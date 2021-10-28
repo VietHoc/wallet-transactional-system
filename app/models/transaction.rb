@@ -6,10 +6,11 @@ class Transaction < ApplicationRecord
   validate :tranferable, on: :create
 
   enum statuses: [:pending, :success, :failed]
-  enum types: [:add_money, :tranfer]
+  enum types: [:deposit, :withdraw, :tranfer]
 
   def tranferable
-    if (self.transaction_type ==Transaction.types["tranfer"]) && (self.from_wallet.balance < self.amount)
+    isValidAmount = (self.transaction_type ==Transaction.types["tranfer"]) && (self.from_wallet.balance < self.amount)
+    if isValidAmount
       errors.add(:amount, "is greater than the account balance")
     end
   end

@@ -6,7 +6,7 @@ wallet_user_2 = Wallet.create!(user: users.last, address: SecureRandom.uuid)
 Transaction.create!(from_wallet: wallet_user_1,
                     to_wallet: wallet_user_1,
                     amount: 100,
-                    transaction_type: Transaction.types["add_money"],
+                    transaction_type: Transaction.types["deposit"],
                     status: Transaction.statuses["success"],
                     description: "Recharge 100 USD to my wallet"
                   )
@@ -15,7 +15,7 @@ Transaction.create!(from_wallet: wallet_user_1,
 Transaction.create!(from_wallet: wallet_user_2,
                     to_wallet: wallet_user_2,
                     amount: 50,
-                    transaction_type: Transaction.types["add_money"],
+                    transaction_type: Transaction.types["deposit"],
                     status: Transaction.statuses["success"],
                     description: "Recharge 50 USD to my wallet"
                   )

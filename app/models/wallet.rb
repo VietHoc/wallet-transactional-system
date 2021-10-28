@@ -4,7 +4,9 @@ class Wallet < ApplicationRecord
 
   def balance
     Transaction.where(from_wallet: self).or(Transaction.where(to_wallet: self)).sum do |tr|
-      if (tr.status == Transaction.statuses["success"]) && (tr.to_wallet_id == self.id)
+      isWithinTransaction = (tr.status == Transaction.statuses["success"]) && (tr.to_wallet_id == self.id) &&
+                              (tr.transaction_type == Transaction.types["deposit"])
+      if isWithinTransaction
         tr.amount 
       else
         -tr.amount

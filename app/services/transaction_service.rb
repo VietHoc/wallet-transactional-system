@@ -8,13 +8,26 @@ class TransactionService
     @description = description
   end
 
-  def call
+  def tranfer
+    create_transaction Transaction.types["tranfer"]
+  end
+
+  def deposit
+    create_transaction Transaction.types["deposit"]
+  end
+
+  def withdraw
+    create_transaction Transaction.types["withdraw"]
+  end
+
+  private 
+  def create_transaction transaction_type
     ActiveRecord::Base.transaction do
       Transaction.create(
         from_wallet_id: @from_wallet,
         to_wallet_id: @to_wallet,
         amount: @amount,
-        transaction_type: Transaction.types["tranfer"],
+        transaction_type: transaction_type,
         status: Transaction.statuses["success"],
         description: @description
       )

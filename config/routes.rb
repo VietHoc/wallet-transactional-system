@@ -4,7 +4,9 @@ Rails.application.routes.draw do
         sessions: 'users/sessions',
     }
   namespace :api do
-    post 'tranfer-money', to: 'transactions#tranfer_money'
+    post 'deposit', to: 'transactions#deposit'
+    post 'withdraw', to: 'transactions#withdraw'
+    post 'tranfer', to: 'transactions#tranfer'
     get 'users/me', to: 'users#me'
     get 'users/search', to: 'users#search'
   end
