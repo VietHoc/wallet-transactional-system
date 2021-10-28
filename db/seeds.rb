@@ -1,7 +1,7 @@
 users = User.create!([{ email: 'tom@gmail.com', password: '12345678'}, { email: 'jerry@gmail.com', password: '12345678'}])
 
-wallet_user_1 = Wallet.create!(user: users.first)
-wallet_user_2 = Wallet.create!(user: users.last)
+wallet_user_1 = Wallet.create!(user: users.first, address: SecureRandom.uuid)
+wallet_user_2 = Wallet.create!(user: users.last, address: SecureRandom.uuid)
 
 Transaction.create!(from_wallet: wallet_user_1,
                     to_wallet: wallet_user_1,

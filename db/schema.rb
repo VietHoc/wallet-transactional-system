@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_092456) do
   end
 
   create_table "wallets", force: :cascade do |t|
+    t.uuid "address"
     t.string "currency", default: "USD"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
