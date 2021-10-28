@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 2021_10_28_092456) do
 
   create_table "transactions", force: :cascade do |t|
     t.decimal "amount"
-    t.string "type"
-    t.string "status"
+    t.integer "transaction_type"
+    t.integer "status"
     t.string "description"
     t.bigint "from_wallet_id", null: false
     t.bigint "to_wallet_id", null: false

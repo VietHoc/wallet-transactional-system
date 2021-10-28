@@ -4,6 +4,6 @@ class Transaction < ApplicationRecord
 
   validates :amount, presence: true, numericality: true
 
-  enum status: [:pending, :success, :failed]
-  enum type: [:add_money, :tranfer]
+  enum statuses: [:pending, :success, :failed]
+  enum types: [:add_money, :tranfer]
 end
