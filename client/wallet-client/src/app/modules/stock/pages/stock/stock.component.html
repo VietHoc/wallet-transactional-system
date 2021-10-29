@@ -1,1 +1,81 @@
-<p>stock works!</p>
+<div class="grid">
+  <div class="col-6">
+    <h4 class="mb-2">
+      Transfer money to wallet:
+    </h4>
+    <div>
+      <div class="grid mb-4">
+        <span class="col-4">Select stock: </span>
+        <p-dropdown [options]="stocks"
+                    class="col-4"
+                    placeholder="Select stock"
+                    [(ngModel)]="selectedStock"
+                    optionLabel="name"></p-dropdown>
+      </div>
+
+      <div class="grid mb-4">
+        <span class="col-4">Find wallet address: User, stock or Stock (Skip for Deposit and Withdraw)</span>
+        <p-autoComplete [(ngModel)]="query"
+                        [autofocus]="true"
+                        [size]="30"
+                        [suggestions]="wallets"
+                        field="description"
+                        class="col-4"
+                        placeholder="Ex: 4bfc1524-ccd3-490a-9dee-a0c1a46c8bc0"
+                        (completeMethod)="searchWallets()"
+                        (onSelect)="selectWallet($event)"></p-autoComplete>
+      </div>
+
+      <div class="grid mb-4">
+        <span class="col-4">Amount: </span>
+        <input [(ngModel)]="transfer"
+               type="number"
+               class="col-4"
+               pInputText>
+      </div>
+      <div class="grid">
+        <span class="col-4">Description: </span>
+        <input [(ngModel)]="transferDescription"
+               type="text"
+               class="col-4"
+               pInputText>
+      </div>
+    </div>
+
+    <div *ngIf="errors"
+         style="color:red;">
+      {{errors}}</div>
+
+    <button pButton
+            type="button"
+            class="mt-4 mr-2"
+            (click)="onDeposit()"
+            label="Deposit"></button>
+
+    <button pButton
+            type="button"
+            class="mt-4 mr-2"
+            (click)="onWithdraw()"
+            label="Withdraw"></button>
+
+    <button pButton
+            type="button"
+            class="mt-4"
+            (click)="onTransfer()"
+            label="Transfer"></button>
+  </div>
+
+  <div class="col-6">
+    <div class="mt-4 stock-info">
+      <div>
+        Stock: <strong>{{selectedStock?.name}}</strong>
+      </div>
+      <div>
+        Balance: <strong>{{(+selectedStock?.balance).toFixed(2)}} {{selectedStock?.currency}}</strong>
+      </div>
+      <div>
+        Wallet address: <strong>{{selectedStock?.wallet_address}}</strong>
+      </div>
+    </div>
+  </div>
+</div>

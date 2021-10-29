@@ -26,10 +26,10 @@ class Transaction < ApplicationRecord
   end
 
   def valid_transaction
-    isSameWallet = ((self.transaction_type ==Transaction.types["deposit"]) || (self.transaction_type ==Transaction.types["withdraw"])) && 
-                (self.from_wallet.id == self.to_wallet.id)
-    if !isSameWallet
+    invalid = ((self.transaction_type ==Transaction.types["deposit"]) || (self.transaction_type ==Transaction.types["withdraw"])) && 
+                (self.from_wallet.id != self.to_wallet.id)
+    if invalid
       errors.add(:transaction, "is invalid")
-    end        
+    end
   end
 end
