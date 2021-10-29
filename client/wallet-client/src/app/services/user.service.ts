@@ -11,19 +11,10 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   public login(payload: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    });
-    return this.http.post(`${this.baseUrl}/users/sign_in`, payload, {headers});
+    return this.http.post(`${this.baseUrl}/users/sign_in`, payload);
   }
 
   public me(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: String(localStorage.getItem('token')),
-    });
-    return this.http.get(`${this.baseUrl}/api/users/me`, {headers});
+    return this.http.get(`${this.baseUrl}/api/users/me`);
   }
 }

@@ -8,7 +8,8 @@ import {ButtonModule} from 'primeng/button';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HeaderInterceptor} from './core/interceptors/header.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,13 @@ import {HttpClientModule} from '@angular/common/http';
     InputTextModule,
     ButtonModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeaderInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
