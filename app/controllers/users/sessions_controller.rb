@@ -1,10 +1,17 @@
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
+  def create
+    super { @token = current_token }
+  end
+
+  def new
+    super { @token = current_token }
+  end
 
   private
 
   def respond_with(resource, _opts = {})
-    render json: { message: 'You are logged in.', token: Warden::JWTAuth::UserEncoder.new.call(@user, :user, 'JWT_AUD').first}, status: :ok
+    render json: { message: 'You are logged in.', token: @token}, status: :ok
   end
 
   def respond_to_on_destroy
@@ -19,5 +26,9 @@ class Users::SessionsController < Devise::SessionsController
 
   def log_out_failure
     render json: { message: "Hmm nothing happened."}, status: :unauthorized
+  end
+
+  def current_token
+    request.env['warden-jwt_auth.token']
   end
 end
