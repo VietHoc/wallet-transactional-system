@@ -42,6 +42,9 @@ export class HeaderInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((errorResponse: HttpErrorResponse) => {
+        if (errorResponse.status == 401) {
+          localStorage.removeItem('token');
+        }
         return throwError(errorResponse);
       }),
       finalize(() => {})

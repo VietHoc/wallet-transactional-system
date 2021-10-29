@@ -40,7 +40,7 @@ export class MyWalletComponent implements OnInit {
         this.errors = null;
       },
       (err) => {
-        this.errors = err.error.message.join(', <br>');
+        this.errors = err.error.message.join(', ');
       }
     );
   }
@@ -56,7 +56,7 @@ export class MyWalletComponent implements OnInit {
           this.errors = null;
         },
         (err) => {
-          this.errors = err.error.message.join(', <br>');
+          this.errors = err.error.message.join(', ');
         }
       );
   }
@@ -76,7 +76,7 @@ export class MyWalletComponent implements OnInit {
           this.errors = null;
         },
         (err) => {
-          this.errors = err.error.message.join(', <br>');
+          this.errors = err.error.message.join(', ');
         }
       );
   }

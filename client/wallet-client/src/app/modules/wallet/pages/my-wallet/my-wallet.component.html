@@ -1,89 +1,114 @@
-<div class="p-d-flex p-grid">
-  <div class="p-col-6">
+<div class="grid">
+  <div class="col-4">
     <h3>My wallet</h3>
 
-    <div>
-      Email: {{user?.email}}
+    <div class="mb-1">
+      Email: <strong>{{user?.email}}</strong>
     </div>
-    <div>
-      Balance: {{(+user?.balance).toFixed(2)}} {{user?.currency}}
+    <div class="mb-1">
+      Balance: <strong>{{(+user?.balance).toFixed(2)}} {{user?.currency}}</strong>
     </div>
-    <div>
-      Wallet address: {{user?.wallet_address}}
+    <div class="mb-1">
+      Wallet address: <strong>{{user?.wallet_address}}</strong>
     </div>
   </div>
-  <div class="p-col-6">
+  <div class="col-8">
     <h3>Action</h3>
 
     <h5 *ngIf="errors"
         style="color: red;"> {{errors}}</h5>
-    <div>
+    <div class="mb-4">
+      <h4 class="mb-2">
+        Deposit money
+      </h4>
       <div>
-        Deposit money:
+        <div class="grid mb-4">
+          <span class="col-3">Amount: </span>
+          <input [(ngModel)]="deposit"
+                 type="number"
+                 min="0"
+                 class="col-3"
+                 pInputText>
+        </div>
+        <div class="grid">
+          <span class="col-3">Description: </span>
+          <input [(ngModel)]="depositDescription"
+                 type="text"
+                 class="col-3"
+                 pInputText>
+        </div>
       </div>
-      <div>
-        <input [(ngModel)]="deposit"
-               type="number"
-               min="0"
-               pInputText>
-        <input [(ngModel)]="depositDescription"
-               type="text"
-               pInputText>
-        <button pButton
-                type="button"
-                [disabled]="false"
-                class="p-ml-2"
-                (click)="onDeposit()"
-                label="Deposit"></button>
-      </div>
+      <button pButton
+              type="button"
+              [disabled]="false"
+              (click)="onDeposit()"
+              label="Deposit"></button>
+
     </div>
-    <div>
-      <div>
+    <div class="mb-4">
+      <h4 class="mb-2">
         Withdraw money:
-      </div>
+      </h4>
       <div>
-        <input [(ngModel)]="withdraw"
-               type="number"
-               min="0"
-               pInputText>
-        <input [(ngModel)]="withdrawDescription"
-               type="text"
-               pInputText>
-        <button pButton
-                type="button"
-                [disabled]="false"
-                class="p-ml-2"
-                (click)="onWithdraw()"
-                label="Withdraw"></button>
+        <div class="grid mb-4">
+          <span class="col-3">Amount: </span>
+          <input [(ngModel)]="withdraw"
+                 type="number"
+                 min="0"
+                 class="col-3"
+                 pInputText>
+        </div>
+        <div class="grid">
+          <span class="col-3">Description: </span>
+          <input [(ngModel)]="withdrawDescription"
+                 type="text"
+                 class="col-3"
+                 pInputText>
+        </div>
       </div>
+      <button pButton
+              type="button"
+              [disabled]="false"
+              (click)="onWithdraw()"
+              label="Withdraw"></button>
     </div>
-    <div>
+    <div class="mb-4">
+      <h4 class="mb-2">
+        Transfer money to user or wallet:
+      </h4>
       <div>
-        Transfer money:
+        <div class="grid mb-4">
+          <span class="col-3">Find user or user wallet address:</span>
+          <p-autoComplete [(ngModel)]="query"
+                          [autofocus]="true"
+                          [size]="30"
+                          [suggestions]="users"
+                          field="user_email"
+                          class="col-3"
+                          placeholder="Ex: jerry@gmail.com"
+                          (completeMethod)="searchUsers()"
+                          (onSelect)="selectUser($event)"></p-autoComplete>
+        </div>
+        <div class="grid mb-4">
+          <span class="col-3">Amount: </span>
+          <input [(ngModel)]="transfer"
+                 type="number"
+                 class="col-3"
+                 pInputText>
+        </div>
+        <div class="grid">
+          <span class="col-3">Description: </span>
+          <input [(ngModel)]="transferDescription"
+                 type="text"
+                 class="col-3"
+                 pInputText>
+        </div>
       </div>
-      <div>
-        <p-autoComplete [(ngModel)]="query"
-                        [autofocus]="true"
-                        [size]="30"
-                        [suggestions]="users"
-                        field="user_email"
-                        placeholder="Ex: jerry@gmail.com"
-                        (completeMethod)="searchUsers()"
-                        (onSelect)="selectUser($event)"></p-autoComplete>
-        <input [(ngModel)]="transfer"
-               type="number"
-               min="0"
-               pInputText>
-        <input [(ngModel)]="transferDescription"
-               type="text"
-               pInputText>
-        <button pButton
-                type="button"
-                [disabled]="false"
-                (click)="onTransfer()"
-                class="p-ml-2"
-                label="Transfer"></button>
-      </div>
+      <button pButton
+              type="button"
+              [disabled]="false"
+              (click)="onTransfer()"
+              label="Transfer"></button>
     </div>
   </div>
 </div>
