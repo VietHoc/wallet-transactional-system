@@ -71,7 +71,7 @@
         Team: <strong>{{selectedTeam?.name}}</strong>
       </div>
       <div>
-        Balance: <strong>{{(selectedTeam?.balance).toFixed(2)}} {{selectedTeam?.currency}}</strong>
+        Balance: <strong>{{(+selectedTeam?.balance).toFixed(2)}} {{selectedTeam?.currency}}</strong>
       </div>
       <div>
         Wallet address: <strong>{{selectedTeam?.wallet_address}}</strong>

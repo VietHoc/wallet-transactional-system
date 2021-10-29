@@ -38,11 +38,10 @@ export class TeamComponent implements OnInit {
       )
       .subscribe(
         (res) => {
-          this.errors = '';
+          window.location.reload();
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;
-          console.log(this.errors);
         }
       );
   }
@@ -62,8 +61,8 @@ export class TeamComponent implements OnInit {
       .deposit(
         this.transfer,
         this.transferDescription,
-        this.selectedTeam.id,
-        this.selectedTeam.id
+        this.selectedTeam?.wallet_id,
+        this.selectedTeam?.wallet_id
       )
       .subscribe(
         (_) => {
@@ -83,8 +82,8 @@ export class TeamComponent implements OnInit {
       .withdraw(
         this.transfer,
         this.transferDescription,
-        this.selectedTeam.id,
-        this.selectedTeam.id
+        this.selectedTeam?.wallet_id,
+        this.selectedTeam?.wallet_id
       )
       .subscribe(
         (_) => {
