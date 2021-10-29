@@ -41,7 +41,7 @@ teams = Team.create!([{ name: 'Team A', wallet: wallet_team_1 },
 wallet_stock_1 = Wallet.create!(address: SecureRandom.uuid)
 wallet_stock_2 = Wallet.create!(address: SecureRandom.uuid)
 
-stocks = Team.create!([{ name: 'Stock 1', wallet: wallet_stock_1 },
+stocks = Stock.create!([{ name: 'Stock 1', wallet: wallet_stock_1 },
                       { name: 'Stock 2', wallet: wallet_stock_2 }])
 
 
