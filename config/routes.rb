@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     post 'transfer', to: 'transactions#transfer'
     get 'users/me', to: 'users#me'
     get 'users/search', to: 'users#search'
+
+    resources :teams
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
