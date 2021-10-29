@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_083033) do
+ActiveRecord::Schema.define(version: 2021_10_29_085108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,22 @@ ActiveRecord::Schema.define(version: 2021_10_29_083033) do
     t.string "jti", null: false
     t.datetime "exp", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "stocks", force: :cascade do |t|
+    t.string "name"
+    t.bigint "wallet_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wallet_id"], name: "index_stocks_on_wallet_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.bigint "wallet_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wallet_id"], name: "index_teams_on_wallet_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -55,6 +71,8 @@ ActiveRecord::Schema.define(version: 2021_10_29_083033) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "stocks", "wallets"
+  add_foreign_key "teams", "wallets"
   add_foreign_key "transactions", "wallets", column: "from_wallet_id"
   add_foreign_key "transactions", "wallets", column: "to_wallet_id"
   add_foreign_key "users", "wallets"

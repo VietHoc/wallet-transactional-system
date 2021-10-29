@@ -31,4 +31,18 @@ Transaction.create!(from_wallet: wallet_user_1,
                   )
 
 
+
+wallet_team_1 = Wallet.create!(address: SecureRandom.uuid)
+wallet_team_2 = Wallet.create!(address: SecureRandom.uuid)
+
+teams = Team.create!([{ name: 'Team A', wallet: wallet_team_1 },
+                      { name: 'Team B', wallet: wallet_team_2 }])
+
+wallet_stock_1 = Wallet.create!(address: SecureRandom.uuid)
+wallet_stock_2 = Wallet.create!(address: SecureRandom.uuid)
+
+stocks = Team.create!([{ name: 'Stock 1', wallet: wallet_stock_1 },
+                      { name: 'Stock 2', wallet: wallet_stock_2 }])
+
+
 puts "Seed date is successfuly"
