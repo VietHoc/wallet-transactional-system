@@ -7,4 +7,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent {
   public title = 'wallet-client';
+
+  public logOut(): void {
+    localStorage.clear();
+  }
+
+  public get isLoginPage(): boolean {
+    return window.location.href.includes('login');
+  }
 }

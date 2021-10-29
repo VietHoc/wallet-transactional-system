@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from 'src/app/models/user.models';
+import {Wallet} from 'src/app/models/wallet.model';
 import {UserService} from 'src/app/services/user.service';
 import {WalletService} from 'src/app/services/wallet.service';
 
@@ -14,12 +15,16 @@ export class MyWalletComponent implements OnInit {
   public deposit = 0;
   public withdraw = 0;
   public transfer = 0;
+  public amount = 0;
   public depositDescription = '';
   public withdrawDescription = '';
   public transferDescription = '';
+  public amountDescription = '';
   public query = '';
   public users: User[] = [];
   public selectedUser: User = new User();
+  public wallets: any[] = [];
+  public selectedWallet: Wallet = new Wallet();
   constructor(
     private userService: UserService,
     private walletService: WalletService
@@ -81,6 +86,22 @@ export class MyWalletComponent implements OnInit {
       );
   }
 
+  public onTransferWallet(): void {
+    this.walletService
+      .transfer(this.selectedWallet?.id, this.amount, this.transferDescription)
+      .subscribe(
+        (res) => {
+          this.user.balance = +this.user.balance - +this.amount;
+          this.amount = 0;
+          this.amountDescription = '';
+          this.errors = null;
+        },
+        (err) => {
+          this.errors = err.error.message?.join(', ') || err.error.error;
+        }
+      );
+  }
+
   public searchUsers(): void {
     this.userService.searchUsers(this.query).subscribe((users) => {
       this.users = users;
@@ -89,5 +110,15 @@ export class MyWalletComponent implements OnInit {
 
   public selectUser($event: any): void {
     this.selectedUser = $event;
+  }
+
+  public searchWallets(): void {
+    this.walletService.searchWallets(this.query).subscribe((wallets) => {
+      this.wallets = wallets;
+    });
+  }
+
+  public selectWallet(wallet: Wallet): void {
+    this.selectedWallet = wallet;
   }
 }

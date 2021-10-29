@@ -73,7 +73,7 @@
       </div>
       <div class="mb-4">
         <h4 class="mb-2">
-          Transfer money to user or wallet:
+          Transfer money to user or user wallet:
         </h4>
         <div>
           <div class="grid mb-4">
@@ -106,6 +106,43 @@
         <button pButton
                 type="button"
                 (click)="onTransfer()"
+                label="Transfer"></button>
+      </div>
+      <div class="mb-4">
+        <h4 class="mb-2">
+          Transfer money to a wallet: (User , Team or Stock)
+        </h4>
+        <div>
+          <div class="grid mb-4">
+            <span class="col-3">Find wallet by address:</span>
+            <p-autoComplete [(ngModel)]="query"
+                            [autofocus]="true"
+                            [size]="30"
+                            [suggestions]="wallets"
+                            field="description"
+                            class="col-4"
+                            placeholder="Ex: 4bfc1524-ccd3-490a-9dee-a0c1a46c8bc0"
+                            (completeMethod)="searchWallets()"
+                            (onSelect)="selectWallet($event)"></p-autoComplete>
+          </div>
+          <div class="grid mb-4">
+            <span class="col-3">Amount: </span>
+            <input [(ngModel)]="amount"
+                   type="number"
+                   class="col-3"
+                   pInputText>
+          </div>
+          <div class="grid">
+            <span class="col-3">Description: </span>
+            <input [(ngModel)]="amountDescription"
+                   type="text"
+                   class="col-3"
+                   pInputText>
+          </div>
+        </div>
+        <button pButton
+                type="button"
+                (click)="onTransferWallet()"
                 label="Transfer"></button>
       </div>
     </div>
