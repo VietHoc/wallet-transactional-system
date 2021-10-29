@@ -12,20 +12,34 @@ export class WalletService {
   readonly baseUrl = `${environment.baseUrl}`;
   constructor(private http: HttpClient) {}
 
-  public deposit(amount: number, description: string): Observable<any> {
+  public deposit(
+    amount: number,
+    description: string,
+    from_wallet_id?: number,
+    to_wallet_id?: number
+  ): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/deposit`, {
       transactions: {
         amount,
         description,
+        from_wallet_id,
+        to_wallet_id,
       },
     });
   }
 
-  public withdraw(amount: number, description: string): Observable<any> {
+  public withdraw(
+    amount: number,
+    description: string,
+    from_wallet_id?: number,
+    to_wallet_id?: number
+  ): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/withdraw`, {
       transactions: {
         amount,
         description,
+        from_wallet_id,
+        to_wallet_id,
       },
     });
   }

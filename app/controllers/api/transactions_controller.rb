@@ -37,7 +37,9 @@ class Api::TransactionsController < ApplicationController
   private
 
   def update_params
-    params[:transactions][:to_wallet_id] = current_user.wallet.id
+    if params[:transactions][:to_wallet_id].nil?
+      params[:transactions][:to_wallet_id] = current_user.wallet.id
+    end
   end
 
   def transaction_params

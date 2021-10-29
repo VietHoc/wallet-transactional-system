@@ -54,8 +54,48 @@ export class TeamComponent implements OnInit {
   }
 
   public selectWallet(wallet: Wallet): void {
-    console.log(wallet);
-
     this.selectedWallet = wallet;
+  }
+
+  public onDeposit(): void {
+    this.walletService
+      .deposit(
+        this.transfer,
+        this.transferDescription,
+        this.selectedTeam.id,
+        this.selectedTeam.id
+      )
+      .subscribe(
+        (_) => {
+          this.selectedTeam.balance =
+            +this.selectedTeam.balance + +this.transfer;
+          this.transferDescription = '';
+          this.errors = '';
+        },
+        (err) => {
+          this.errors = err.error.message?.join(', ') || err.error.error;
+        }
+      );
+  }
+
+  public onWithdraw(): void {
+    this.walletService
+      .withdraw(
+        this.transfer,
+        this.transferDescription,
+        this.selectedTeam.id,
+        this.selectedTeam.id
+      )
+      .subscribe(
+        (_) => {
+          this.selectedTeam.balance =
+            +this.selectedTeam.balance - +this.transfer;
+          this.transferDescription = '';
+          this.errors = '';
+        },
+        (err) => {
+          this.errors = err.error.message?.join(', ') || err.error.error;
+        }
+      );
   }
 }
