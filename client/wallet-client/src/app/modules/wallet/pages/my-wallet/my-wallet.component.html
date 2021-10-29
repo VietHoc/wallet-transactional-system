@@ -67,6 +67,7 @@
                         [size]="30"
                         [suggestions]="users"
                         field="user_email"
+                        placeholder="Ex: jerry@gmail.com"
                         (completeMethod)="searchUsers()"
                         (onSelect)="selectUser($event)"></p-autoComplete>
         <input [(ngModel)]="transfer"

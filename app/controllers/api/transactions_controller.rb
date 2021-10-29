@@ -49,7 +49,7 @@ class Api::TransactionsController < ApplicationController
     TransactionQueueService.instance.send("#{transaction_type}_queue").push(transaction_params)
     instance_param = TransactionQueueService.instance.send("#{transaction_type}_queue").pop
     TransactionService.new( instance_param[:from_wallet_id],
-      instance_param[:from_wallet_id],
+      instance_param[:to_wallet_id],
       instance_param[:amount],
       instance_param[:description]
     )
