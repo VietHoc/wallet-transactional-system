@@ -41,7 +41,9 @@ class Api::TransactionsController < ApplicationController
   end
 
   def transaction_params
-    params[:transactions][:from_wallet_id] = current_user.wallet.id
+    if params[:transactions][:from_wallet_id].nil?
+      params[:transactions][:from_wallet_id] = current_user.wallet.id
+    end
     params.require(:transactions).permit(:from_wallet_id, :to_wallet_id, :amount, :description)
   end
 
