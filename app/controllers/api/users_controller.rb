@@ -17,6 +17,7 @@ class Api::UsersController < ApplicationController
         {
           user_id: user.id,
           user_email: user.email,
+          wallet_id: user.wallet.id,
           wallet_address: user.wallet.address,
         }
       end

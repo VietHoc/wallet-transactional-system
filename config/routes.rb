@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   namespace :api do
     post 'deposit', to: 'transactions#deposit'
     post 'withdraw', to: 'transactions#withdraw'
-    post 'tranfer', to: 'transactions#tranfer'
+    post 'transfer', to: 'transactions#transfer'
     get 'users/me', to: 'users#me'
     get 'users/search', to: 'users#search'
   end

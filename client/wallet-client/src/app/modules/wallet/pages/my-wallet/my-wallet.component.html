@@ -1,13 +1,88 @@
-<div>
-  <H3>My wallet</H3>
+<div class="p-d-flex p-grid">
+  <div class="p-col-6">
+    <h3>My wallet</h3>
 
-  <div>
-    Email: {{user?.email}}
+    <div>
+      Email: {{user?.email}}
+    </div>
+    <div>
+      Balance: {{(+user?.balance).toFixed(2)}} {{user?.currency}}
+    </div>
+    <div>
+      Wallet address: {{user?.wallet_address}}
+    </div>
   </div>
-  <div>
-    Balance: {{user?.balance}} {{user?.currency}}
-  </div>
-  <div>
-    Wallet address: {{user?.wallet_address}}
+  <div class="p-col-6">
+    <h3>Action</h3>
+
+    <h5 *ngIf="errors"
+        style="color: red;"> {{errors}}</h5>
+    <div>
+      <div>
+        Deposit money:
+      </div>
+      <div>
+        <input [(ngModel)]="deposit"
+               type="number"
+               min="0"
+               pInputText>
+        <input [(ngModel)]="depositDescription"
+               type="text"
+               pInputText>
+        <button pButton
+                type="button"
+                [disabled]="false"
+                class="p-ml-2"
+                (click)="onDeposit()"
+                label="Deposit"></button>
+      </div>
+    </div>
+    <div>
+      <div>
+        Withdraw money:
+      </div>
+      <div>
+        <input [(ngModel)]="withdraw"
+               type="number"
+               min="0"
+               pInputText>
+        <input [(ngModel)]="withdrawDescription"
+               type="text"
+               pInputText>
+        <button pButton
+                type="button"
+                [disabled]="false"
+                class="p-ml-2"
+                (click)="onWithdraw()"
+                label="Withdraw"></button>
+      </div>
+    </div>
+    <div>
+      <div>
+        Transfer money:
+      </div>
+      <div>
+        <p-autoComplete [(ngModel)]="query"
+                        [autofocus]="true"
+                        [size]="30"
+                        [suggestions]="users"
+                        field="user_email"
+                        (completeMethod)="searchUsers()"
+                        (onSelect)="selectUser($event)"></p-autoComplete>
+        <input [(ngModel)]="transfer"
+               type="number"
+               min="0"
+               pInputText>
+        <input [(ngModel)]="transferDescription"
+               type="text"
+               pInputText>
+        <button pButton
+                type="button"
+                [disabled]="false"
+                (click)="onTransfer()"
+                class="p-ml-2"
+                label="Transfer"></button>
+      </div>
+    </div>
   </div>
 </div>

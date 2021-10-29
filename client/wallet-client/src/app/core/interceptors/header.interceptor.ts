@@ -1,12 +1,17 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
+import {catchError, map, finalize} from 'rxjs/operators';
+
 import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpClient,
+  HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
+import {environment} from 'src/environments/environment';
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {
   constructor() {}
@@ -30,6 +35,16 @@ export class HeaderInterceptor implements HttpInterceptor {
     );
     const authReq = req.clone({headers: newHeaders});
 
-    return next.handle(authReq);
+    return next.handle(authReq).pipe(
+      map((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse && !environment.production) {
+        }
+        return event;
+      }),
+      catchError((errorResponse: HttpErrorResponse) => {
+        return throwError(errorResponse);
+      }),
+      finalize(() => {})
+    );
   }
 }

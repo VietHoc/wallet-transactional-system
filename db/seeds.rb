@@ -23,7 +23,7 @@ Transaction.create!(from_wallet: wallet_user_2,
 Transaction.create!(from_wallet: wallet_user_1,
                     to_wallet: wallet_user_2,
                     amount: 10,
-                    transaction_type: Transaction.types["tranfer"],
+                    transaction_type: Transaction.types["transfer"],
                     status: Transaction.statuses["success"],
                     description: "Send 10 USD to Jerry"
                   )

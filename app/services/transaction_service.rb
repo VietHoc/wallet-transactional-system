@@ -8,8 +8,8 @@ class TransactionService
     @description = description
   end
 
-  def tranfer
-    create_transaction Transaction.types["tranfer"]
+  def transfer
+    create_transaction Transaction.types["transfer"]
   end
 
   def deposit

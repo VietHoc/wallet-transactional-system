@@ -1,9 +1,9 @@
 class Api::TransactionsController < ApplicationController
   before_action :update_params, only: [:deposit, :withdraw]
 
-  def tranfer
-    service = newTransactionService("tranfer")
-    @transaction = service.tranfer
+  def transfer
+    service = newTransactionService("transfer")
+    @transaction = service.transfer
 
     if @transaction.errors.empty?
       render json: { message: "Send money successfully" }, status: 200
@@ -37,11 +37,11 @@ class Api::TransactionsController < ApplicationController
   private
 
   def update_params
-    params[:transactions][:from_wallet_id] = current_user.wallet.id
     params[:transactions][:to_wallet_id] = current_user.wallet.id
   end
 
   def transaction_params
+    params[:transactions][:from_wallet_id] = current_user.wallet.id
     params.require(:transactions).permit(:from_wallet_id, :to_wallet_id, :amount, :description)
   end
 
