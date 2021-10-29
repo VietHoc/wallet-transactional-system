@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Goal: Wallet transactional system (with a front end)
 
-Things you may want to cover:
+- Live demo: https://wallet-transactional-system.herokuapp.com/
 
-* Ruby version
+- Backend:
 
-* System dependencies
+  - Rails: https://rubyonrails.org/
+  - PostgreSQL
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Frontend:
+  - Angular: https://angular.io/
