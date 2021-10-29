@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   ];
   public loginForm: FormGroup;
   public currentUser = this.users[0];
+  public errors = '';
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -41,10 +42,15 @@ export class LoginComponent implements OnInit {
     const payload = {
       user: this.loginForm.value,
     };
-    this.userService.login(payload).subscribe((res) => {
-      localStorage.setItem('token', `Bearer ${res.token}`);
-      this.router.navigate(['/my-wallet']);
-    });
+    this.userService.login(payload).subscribe(
+      (res) => {
+        localStorage.setItem('token', `Bearer ${res.token}`);
+        this.router.navigate(['/my-wallet']);
+      },
+      (err) => {
+        this.errors = err.error.message?.join(', ') || err.error.error;
+      }
+    );
   }
 
   public selectUser($event: any): void {
