@@ -1,5 +1,5 @@
 class Wallet < ApplicationRecord
-  belongs_to :user
+  has_one :user
   has_many :transactions
 
   def balance

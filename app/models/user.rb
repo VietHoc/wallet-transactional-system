@@ -4,7 +4,7 @@ class User < ApplicationRecord
          :registerable,
          jwt_revocation_strategy: JwtDenylist
 
-  has_one :wallet
+  belongs_to :wallet
 
   scope :search, -> (query) { joins(:wallet).where('(wallets.address::varchar LIKE ?) OR (users.email LIKE ?)', query, query) }
 end
