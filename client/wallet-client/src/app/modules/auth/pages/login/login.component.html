@@ -1,0 +1,43 @@
+<form [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="form_login">
+  <h2 class="p-mb-3">Login form</h2>
+  <div class="p-field p-grid">
+    <label for="email"
+           class="p-col-fixed"
+           style="width:300px">Email</label>
+    <div class="p-col">
+      <input id="email"
+             formControlName="email"
+             type="text"
+             pInputText>
+    </div>
+  </div>
+  <br>
+  <div class="p-field p-grid">
+    <label for="password"
+           class="p-col-fixed"
+           style="width:300px">Password</label>
+    <div class="p-col">
+      <input id="password"
+             formControlName="password"
+             type="password"
+             pInputText>
+    </div>
+  </div>
+  <br>
+  <button pButton
+          type="submit"
+          [disabled]="false"
+          label="Login"></button>
+
+  <br><br>
+</form>
+<div>
+  <div>Select user:</div>
+  <p-dropdown [options]="users"
+              [(ngModel)]="currentUser"
+              optionLabel="email"
+              (onChange)="selectUser($event.value)">
+  </p-dropdown>
+</div>
