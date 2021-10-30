@@ -6,6 +6,5 @@ class User < ApplicationRecord
 
   belongs_to :wallet
 
-  scope :search, -> (query) { joins(:wallet)
-    .where('(wallets.address::varchar LIKE ?) OR (users.email LIKE ?)',query, query) }
+  scope :search, -> (query) { joins(:wallet).where('(wallets.address::varchar LIKE ?) OR (users.email LIKE ?)', query, query)}
 end

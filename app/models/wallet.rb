@@ -6,8 +6,8 @@ class Wallet < ApplicationRecord
 
   def balance
     Transaction.where(from_wallet: self).or(Transaction.where(to_wallet: self)).sum do |tr|
-      if tr.deposit_success? || tr.receive_success?(self.id)
-        tr.amount 
+      if tr.deposit_success? || tr.receive_success?(id)
+        tr.amount
       else
         -tr.amount
       end

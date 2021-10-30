@@ -22,7 +22,7 @@ class TransactionService
 
   private
 
-  def create_transaction transaction_type
+  def create_transaction(transaction_type)
     ActiveRecord::Base.transaction do
       Transaction.create(
         from_wallet_id: @from_wallet,

@@ -1,7 +1,7 @@
 class Api::StocksController < ApplicationController
   def index
     @stocks = Stock.includes(:wallet).all
-    render :json => {
+    render json: {
       stocks: @stocks.map do |stock|
         {
           id: stock.id,
@@ -18,13 +18,13 @@ class Api::StocksController < ApplicationController
   def show
     @stock = Stock.find(params[:id])
     wallet = @stock.wallet
-    render :json => {
+    render json: {
       stock: {
         id: @stock.id,
         name: @stock.name,
         wallet_id: wallet.id,
         wallet_address: wallet.address,
-        balance: wallet.balance,
+        balance: wallet.balance
       }
     }
   end

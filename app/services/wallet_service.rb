@@ -1,5 +1,5 @@
 class WalletService
-  def self.search addresses
+  def self.search(addresses)
     wallets = Wallet.where(address: addresses)
     wallets.map do |wallet|
       name =  if wallet.user.present?

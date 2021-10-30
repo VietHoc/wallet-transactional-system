@@ -2,33 +2,33 @@ class Api::TransactionsController < ApplicationController
   before_action :update_params, only: [:deposit, :withdraw]
 
   def transfer
-    service = newTransactionService("transfer")
+    service = newTransactionService('transfer')
     @transaction = service.transfer
 
     if @transaction.errors.empty?
-      render json: { message: "Send money successfully" }, status: 200
+      render json: { message: 'Send money successfully' }, status: 200
     else
       render json: { message: @transaction.errors.full_messages }, status: 400
     end
   end
 
   def deposit
-    service = newTransactionService("deposit")
+    service = newTransactionService('deposit')
     @transaction = service.deposit
 
     if @transaction.errors.empty?
-      render json: { message: "Deposit money successfully" }, status: 200
+      render json: { message: 'Deposit money successfully' }, status: 200
     else
       render json: { message: @transaction.errors.full_messages }, status: 400
     end
   end
 
   def withdraw
-    service = newTransactionService("withdraw")
+    service = newTransactionService('withdraw')
     @transaction = service.withdraw
 
     if @transaction.errors.empty?
-      render json: { message: "Withdraw money successfully" }, status: 200
+      render json: { message: 'Withdraw money successfully' }, status: 200
     else
       render json: { message: @transaction.errors.full_messages }, status: 400
     end
@@ -50,8 +50,8 @@ class Api::TransactionsController < ApplicationController
   end
 
   def newTransactionService transaction_type
-    TransactionQueueService.instance.send("#{transaction_type}_queue").push(transaction_params)
-    instance_param = TransactionQueueService.instance.send("#{transaction_type}_queue").pop
+    TransactionQueueService.instance.send('#{transaction_type}_queue').push(transaction_params)
+    instance_param = TransactionQueueService.instance.send('#{transaction_type}_queue').pop
     TransactionService.new( instance_param[:from_wallet_id],
       instance_param[:to_wallet_id],
       instance_param[:amount],
