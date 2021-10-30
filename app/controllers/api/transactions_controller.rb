@@ -2,7 +2,7 @@ class Api::TransactionsController < ApplicationController
   before_action :update_params, only: [:deposit, :withdraw]
 
   def transfer
-    service = newTransactionService('transfer')
+    service = new_transaction_service('transfer')
     @transaction = service.transfer
 
     if @transaction.errors.empty?
@@ -13,7 +13,7 @@ class Api::TransactionsController < ApplicationController
   end
 
   def deposit
-    service = newTransactionService('deposit')
+    service = new_transaction_service('deposit')
     @transaction = service.deposit
 
     if @transaction.errors.empty?
@@ -24,7 +24,7 @@ class Api::TransactionsController < ApplicationController
   end
 
   def withdraw
-    service = newTransactionService('withdraw')
+    service = new_transaction_service('withdraw')
     @transaction = service.withdraw
 
     if @transaction.errors.empty?
@@ -49,9 +49,9 @@ class Api::TransactionsController < ApplicationController
     params.require(:transactions).permit(:from_wallet_id, :to_wallet_id, :amount, :description)
   end
 
-  def newTransactionService transaction_type
-    TransactionQueueService.instance.send('#{transaction_type}_queue').push(transaction_params)
-    instance_param = TransactionQueueService.instance.send('#{transaction_type}_queue').pop
+  def new_transaction_service(transaction_type)
+    TransactionQueueService.instance.send("#{transaction_type}_queue").push(transaction_params)
+    instance_param = TransactionQueueService.instance.send("#{transaction_type}_queue").pop
     TransactionService.new( instance_param[:from_wallet_id],
       instance_param[:to_wallet_id],
       instance_param[:amount],
