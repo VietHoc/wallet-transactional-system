@@ -6,12 +6,7 @@ class Wallet < ApplicationRecord
 
   def balance
     Transaction.where(from_wallet: self).or(Transaction.where(to_wallet: self)).sum do |tr|
-      deposit = (tr.status == Transaction.statuses["success"]) && (tr.from_wallet_id == self.id) &&
-                  (tr.to_wallet_id == self.id) && (tr.transaction_type == Transaction.types["deposit"])
-      receive = (tr.status == Transaction.statuses["success"]) && (tr.to_wallet_id == self.id) &&
-                    (tr.transaction_type == Transaction.types["transfer"])
-
-      if (deposit || receive)
+      if tr.deposit_success? || tr.receive_success?(self.id)
         tr.amount 
       else
         -tr.amount

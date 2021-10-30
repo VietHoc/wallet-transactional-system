@@ -9,18 +9,19 @@ class TransactionService
   end
 
   def transfer
-    create_transaction Transaction.types["transfer"]
+    create_transaction Transaction.types['transfer']
   end
 
   def deposit
-    create_transaction Transaction.types["deposit"]
+    create_transaction Transaction.types['deposit']
   end
 
   def withdraw
-    create_transaction Transaction.types["withdraw"]
+    create_transaction Transaction.types['withdraw']
   end
 
-  private 
+  private
+
   def create_transaction transaction_type
     ActiveRecord::Base.transaction do
       Transaction.create(
@@ -28,7 +29,7 @@ class TransactionService
         to_wallet_id: @to_wallet,
         amount: @amount,
         transaction_type: transaction_type,
-        status: Transaction.statuses["success"],
+        status: Transaction.statuses['success'],
         description: @description
       )
     end

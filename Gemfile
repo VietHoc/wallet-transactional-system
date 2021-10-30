@@ -28,6 +28,7 @@ gem 'rack-cors'
 # Devise extension which uses JWT tokens for user authentication
 gem 'devise-jwt', '~> 0.8.0'
 gem 'dry-configurable', '0.9.0'
+gem 'rubocop'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

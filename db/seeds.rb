@@ -8,26 +8,26 @@ users = User.create!([{ email: 'tom@gmail.com', password: '12345678', wallet: wa
 Transaction.create!(from_wallet: wallet_user_1,
                     to_wallet: wallet_user_1,
                     amount: 100,
-                    transaction_type: Transaction.types["deposit"],
-                    status: Transaction.statuses["success"],
-                    description: "Recharge 100 USD to my wallet"
+                    transaction_type: Transaction.types['deposit'],
+                    status: Transaction.statuses['success'],
+                    description: 'Recharge 100 USD to my wallet'
                   )
 
 
 Transaction.create!(from_wallet: wallet_user_2,
                     to_wallet: wallet_user_2,
                     amount: 50,
-                    transaction_type: Transaction.types["deposit"],
-                    status: Transaction.statuses["success"],
-                    description: "Recharge 50 USD to my wallet"
+                    transaction_type: Transaction.types['deposit'],
+                    status: Transaction.statuses['success'],
+                    description: 'Recharge 50 USD to my wallet'
                   )
 
 Transaction.create!(from_wallet: wallet_user_1,
                     to_wallet: wallet_user_2,
                     amount: 10,
-                    transaction_type: Transaction.types["transfer"],
-                    status: Transaction.statuses["success"],
-                    description: "Send 10 USD to Jerry"
+                    transaction_type: Transaction.types['transfer'],
+                    status: Transaction.statuses['success'],
+                    description: 'Send 10 USD to Jerry'
                   )
 
 
@@ -45,4 +45,4 @@ stocks = Stock.create!([{ name: 'Stock 1', wallet: wallet_stock_1 },
                       { name: 'Stock 2', wallet: wallet_stock_2 }])
 
 
-puts "Seed date is successfuly"
+puts 'Seed date is successfuly'
