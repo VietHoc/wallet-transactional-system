@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MessageService} from 'primeng/api';
 import {Wallet} from 'src/app/models/wallet.model';
 import {StockService} from 'src/app/services/stock.service';
 import {WalletService} from 'src/app/services/wallet.service';
@@ -19,7 +20,8 @@ export class StockComponent implements OnInit {
   public errors = '';
   constructor(
     private stockService: StockService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +41,11 @@ export class StockComponent implements OnInit {
       .subscribe(
         (res) => {
           window.location.reload();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;
@@ -65,11 +72,16 @@ export class StockComponent implements OnInit {
         this.selectedStock?.wallet_id
       )
       .subscribe(
-        (_) => {
+        (res) => {
           this.selectedStock.balance =
             +this.selectedStock.balance + +this.transfer;
           this.transferDescription = '';
           this.errors = '';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;
@@ -86,11 +98,16 @@ export class StockComponent implements OnInit {
         this.selectedStock?.wallet_id
       )
       .subscribe(
-        (_) => {
+        (res) => {
           this.selectedStock.balance =
             +this.selectedStock.balance - +this.transfer;
           this.transferDescription = '';
           this.errors = '';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;

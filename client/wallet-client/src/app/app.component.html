@@ -9,5 +9,7 @@
      (click)="logOut()">Log out</a>
 </div>
 <div class="container">
+  <p-toast styles="z-index: 1000;"
+           [breakpoints]="{ '5000px': { width: 'auto', right: '0'} }"></p-toast>
   <router-outlet></router-outlet>
 </div>

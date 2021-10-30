@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {MessageService} from 'primeng/api';
 import {UserService} from 'src/app/services/user.service';
 
 @Component({
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.loginForm = this.fb.group({
       email: [this.currentUser.email, [Validators.required, Validators.email]],
@@ -46,6 +48,11 @@ export class LoginComponent implements OnInit {
       (res) => {
         localStorage.setItem('token', `Bearer ${res.token}`);
         this.router.navigate(['/my-wallet']);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'SUCCESS',
+          detail: res.message,
+        });
       },
       (err) => {
         this.errors = err.error.message?.join(', ') || err.error.error;

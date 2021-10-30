@@ -10,6 +10,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {HeaderInterceptor} from './core/interceptors/header.interceptor';
+import {ToastModule} from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,8 +26,10 @@ import {HeaderInterceptor} from './core/interceptors/header.interceptor';
 
     InputTextModule,
     ButtonModule,
+    ToastModule,
   ],
   providers: [
+    MessageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HeaderInterceptor,

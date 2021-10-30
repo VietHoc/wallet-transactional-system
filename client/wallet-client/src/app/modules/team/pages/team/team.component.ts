@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MessageService} from 'primeng/api';
 import {Wallet} from 'src/app/models/wallet.model';
 import {TeamService} from 'src/app/services/team.service';
 import {WalletService} from 'src/app/services/wallet.service';
@@ -19,7 +20,8 @@ export class TeamComponent implements OnInit {
   public errors = '';
   constructor(
     private teamService: TeamService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +40,11 @@ export class TeamComponent implements OnInit {
       )
       .subscribe(
         (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
           window.location.reload();
         },
         (err) => {
@@ -65,11 +72,16 @@ export class TeamComponent implements OnInit {
         this.selectedTeam?.wallet_id
       )
       .subscribe(
-        (_) => {
+        (res) => {
           this.selectedTeam.balance =
             +this.selectedTeam.balance + +this.transfer;
           this.transferDescription = '';
           this.errors = '';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;
@@ -86,11 +98,16 @@ export class TeamComponent implements OnInit {
         this.selectedTeam?.wallet_id
       )
       .subscribe(
-        (_) => {
+        (res) => {
           this.selectedTeam.balance =
             +this.selectedTeam.balance - +this.transfer;
           this.transferDescription = '';
           this.errors = '';
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;

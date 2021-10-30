@@ -3,6 +3,7 @@ import {User} from 'src/app/models/user.models';
 import {Wallet} from 'src/app/models/wallet.model';
 import {UserService} from 'src/app/services/user.service';
 import {WalletService} from 'src/app/services/wallet.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-my-wallet',
@@ -27,7 +28,8 @@ export class MyWalletComponent implements OnInit {
   public selectedWallet: Wallet = new Wallet();
   constructor(
     private userService: UserService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -38,11 +40,16 @@ export class MyWalletComponent implements OnInit {
 
   public onDeposit(): void {
     this.walletService.deposit(this.deposit, this.depositDescription).subscribe(
-      (_) => {
+      (res: any) => {
         this.user.balance = +this.user.balance + +this.deposit;
         this.deposit = 0;
         this.depositDescription = '';
         this.errors = null;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'SUCCESS',
+          detail: res.message,
+        });
       },
       (err) => {
         this.errors = err.error.message?.join(', ') || err.error.error;
@@ -54,11 +61,16 @@ export class MyWalletComponent implements OnInit {
     this.walletService
       .withdraw(this.withdraw, this.withdrawDescription)
       .subscribe(
-        (_) => {
+        (res) => {
           this.user.balance = +this.user.balance - +this.withdraw;
           this.withdraw = 0;
           this.withdrawDescription = '';
           this.errors = null;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;
@@ -74,11 +86,16 @@ export class MyWalletComponent implements OnInit {
         this.transferDescription
       )
       .subscribe(
-        (_) => {
+        (res) => {
           this.user.balance = +this.user.balance - +this.transfer;
           this.transfer = 0;
           this.transferDescription = '';
           this.errors = null;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;
@@ -95,6 +112,11 @@ export class MyWalletComponent implements OnInit {
           this.amount = 0;
           this.amountDescription = '';
           this.errors = null;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'SUCCESS',
+            detail: res.message,
+          });
         },
         (err) => {
           this.errors = err.error.message?.join(', ') || err.error.error;
