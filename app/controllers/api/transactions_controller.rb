@@ -37,25 +37,21 @@ class Api::TransactionsController < ApplicationController
   private
 
   def update_params
-    if params[:transactions][:to_wallet_id].nil?
-      params[:transactions][:to_wallet_id] = current_user.wallet.id
-    end
+    params[:transactions][:to_wallet_id] = current_user.wallet.id if params[:transactions][:to_wallet_id].nil?
   end
 
   def transaction_params
-    if params[:transactions][:from_wallet_id].nil?
-      params[:transactions][:from_wallet_id] = current_user.wallet.id
-    end
+    params[:transactions][:from_wallet_id] = current_user.wallet.id if params[:transactions][:from_wallet_id].nil?
     params.require(:transactions).permit(:from_wallet_id, :to_wallet_id, :amount, :description)
   end
 
   def new_transaction_service(transaction_type)
     TransactionQueueService.instance.send("#{transaction_type}_queue").push(transaction_params)
     instance_param = TransactionQueueService.instance.send("#{transaction_type}_queue").pop
-    TransactionService.new( instance_param[:from_wallet_id],
-      instance_param[:to_wallet_id],
-      instance_param[:amount],
-      instance_param[:description]
-    )
+    TransactionService.new(instance_param[:from_wallet_id],
+                          instance_param[:to_wallet_id],
+                          instance_param[:amount],
+                          instance_param[:description]
+                          )
   end
 end

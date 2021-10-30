@@ -9,7 +9,7 @@ class Transaction < ApplicationRecord
   enum types: [:deposit, :withdraw, :transfer]
 
   def amount_invalid
-    in_valid_amount = (transfer? || withdraw?) && self.from_wallet.balance < self.amount
+    in_valid_amount = (transfer? || withdraw?) && self.from_wallet.balance < amount
 
     errors.add(:amount, 'is greater than the account balance') if in_valid_amount
   end
@@ -21,7 +21,7 @@ class Transaction < ApplicationRecord
   end
 
   def valid_transaction
-    invalid = (deposit? || withdraw?) && self.from_wallet_id != self.to_wallet_id
+    invalid = (deposit? || withdraw?) && from_wallet_id != to_wallet_id
     
     errors.add(:transaction, 'is invalid') if invalid
   end
@@ -30,7 +30,7 @@ class Transaction < ApplicationRecord
     success? && self_transaction? && deposit?
   end
 
-  def receive_success? wallet_id
+  def receive_success? (wallet_id)
     success? && to_wallet_id == wallet_id && transfer?
   end
 

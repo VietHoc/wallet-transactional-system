@@ -1,12 +1,12 @@
 class Api::UsersController < ApplicationController
   def me
     wallet = current_user.wallet
-    render json: { 
+    render json: {
       id: current_user.id,
       email: current_user.email,
       balance: wallet.balance,
       currency: wallet.currency,
-      wallet_address: wallet.address,
+      wallet_address: wallet.address
     }
   end
 
@@ -18,7 +18,7 @@ class Api::UsersController < ApplicationController
           user_id: user.id,
           user_email: user.email,
           wallet_id: user.wallet.id,
-          wallet_address: user.wallet.address,
+          wallet_address: user.wallet.address
         }
       end
     }
