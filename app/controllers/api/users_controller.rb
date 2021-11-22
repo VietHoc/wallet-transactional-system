@@ -2,6 +2,7 @@ class Api::UsersController < ApplicationController
   def me
     wallet = current_user.wallet
     GuestsCleanupJob.perform_later wallet
+    UserMailer.with(user: current_user).welcome_email.deliver_later
     render json: {
       id: current_user.id,
       email: current_user.email,
