@@ -1,6 +1,7 @@
 class Api::UsersController < ApplicationController
   def me
     wallet = current_user.wallet
+    GuestsCleanupJob.perform_later wallet
     render json: {
       id: current_user.id,
       email: current_user.email,

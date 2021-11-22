@@ -29,6 +29,7 @@ gem 'rack-cors'
 gem 'devise-jwt', '~> 0.8.0'
 gem 'dry-configurable', '0.9.0'
 gem 'rubocop'
+gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
